@@ -1,0 +1,22 @@
+workflows:
+  ios-build-for-sibapp:
+    name: Build unsigned iOS IPA for SibApp
+    environment:
+      xcode: latest
+    scripts:
+      - name: Build Xcode project without signing
+        script: |
+          xcodebuild \
+            -project Unity-iPhone.xcodeproj \
+            -scheme Unity-iPhone \
+            -configuration Release \
+            -archivePath build/Unity.xcarchive \
+            archive CODE_SIGNING_ALLOWED=NO
+
+          xcodebuild \
+            -exportArchive \
+            -archivePath build/Unity.xcarchive \
+            -exportPath build/export \
+            -exportOptionsPlist exportOptions.plist
+    artifacts:
+      - build/export/*.ipa
