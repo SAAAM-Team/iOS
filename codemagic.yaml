@@ -4,8 +4,16 @@ workflows:
     environment:
       xcode: latest
     scripts:
+      - name: Debug Info
+        script: |
+          echo "📁 Listing root contents:"
+          ls -lah
+          echo "🔍 Checking for UnityFramework target sources:"
+          find . -name UnityFramework
+
       - name: Build Xcode project without signing
         script: |
+          echo "🚧 Starting archive (no code signing)..."
           xcodebuild \
             -project Unity-iPhone.xcodeproj \
             -scheme Unity-iPhone \
@@ -13,6 +21,7 @@ workflows:
             -archivePath build/Unity.xcarchive \
             archive CODE_SIGNING_ALLOWED=NO
 
+          echo "📦 Exporting .ipa..."
           xcodebuild \
             -exportArchive \
             -archivePath build/Unity.xcarchive \
