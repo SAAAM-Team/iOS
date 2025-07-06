@@ -4,16 +4,21 @@ workflows:
     environment:
       xcode: latest
     scripts:
-      - name: Debug Info
+      - name: Confirm libiPhone-lib.a exists and is real
         script: |
-          echo "📁 Listing root contents:"
-          ls -lah
-          echo "🔍 Checking for UnityFramework target sources:"
-          find . -name UnityFramework
+          echo "🔍 Checking if libiPhone-lib.a exists..."
+          if [ ! -f Libraries/libiPhone-lib.a ]; then
+            echo "❌ libiPhone-lib.a NOT FOUND in Codemagic build environment!"
+            echo "🚫 Build cancelled. Make sure the file is committed correctly and not blocked by Git LFS."
+            exit 1
+          fi
+          echo "✅ libiPhone-lib.a exists!"
+          echo "📏 File size:"
+          du -h Libraries/libiPhone-lib.a
 
       - name: Build Xcode project without signing
         script: |
-          echo "🚧 Starting archive (no code signing)..."
+          echo "🚧 Archiving project..."
           xcodebuild \
             -project Unity-iPhone.xcodeproj \
             -scheme Unity-iPhone \
