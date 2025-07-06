@@ -1,0 +1,17 @@
+# حذف اطلاعات دیباگ و مرتبط با Burst
+MIRTORABI_BurstDebugInformation_DoNotShip/
+
+# حذف تست‌ها
+Unity-iPhone Tests/
+
+# حذف فایل‌های macOS
+.DS_Store
+
+# حذف خروجی احتمالی
+build/
+DerivedData/
+*.xcuserstate
+*.crash
+
+# حذف اسکریپت‌های موقتی (در صورت تولید خروجی ناخواسته)
+*.sh~
